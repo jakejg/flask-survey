@@ -1,0 +1,15 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satisfaction Survey</title>
+</head>
+<body>
+    {% for msg in get_flashed_messages() %}
+    <h1>{{msg}}</h1>
+    {% endfor %}
+    
+    {% block start %}{% endblock %}
+    {% block form %}{% endblock %}
+</body>
+</html>
