@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block choose %}
+<form action="/save-form">
+    <select name="survey_title" id="">
+        {% for survey in surveys.values() %}
+        <option value="{{survey.title}}">
+            {{survey.title}}
+    {% endfor %}
+    </select> 
+    <button>Select</button>
+</form>
+
+
+{% endblock %}
+

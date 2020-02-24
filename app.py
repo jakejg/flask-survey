@@ -13,9 +13,19 @@ question_number = 0
 
 @app.route('/')
 def home():
-    title = surveys.satisfaction_survey.title
-    instructions = surveys.satisfaction_survey.instructions
-    return render_template('start.html', title = title, instructions= instructions, q_number= question_number)
+    surveys_dict = surveys.surveys
+    return render_template('choose.html', surveys = surveys_dict)
+
+@app.route('/save-form')
+def satisfaction():
+    selected_title = request.args.get("survey_title")
+
+    for survey in surveys.surveys.values():
+        if survey.title == selected_title:
+            # fix
+            session['survey'] = 
+            return render_template('start.html', survey = survey)
+    return "nope"
 
 @app.route("/set-session", methods=['POST'])
 def store_session():
@@ -31,7 +41,7 @@ def questions(num):
         curr_question = surveys.satisfaction_survey.questions[num].question
         choices = surveys.satisfaction_survey.questions[num].choices
         
-        return render_template('questions.html', choices=choices, question=curr_question)
+        return render_template('questions.html', choices = choices, question = curr_question)
     else:
         flash("You are trying to access an invalid question")
         return redirect(f'/questions/{question_number}')
