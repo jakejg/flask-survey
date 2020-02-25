@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block choose %}
+<form method="POST">
+    <select name="survey_id" id="">
+        {% for id, survey in surveys.items() %}
+        <option value="{{id}}">
+            {{survey.title}}
+    {% endfor %}
+    </select> 
+    <button>Select</button>
+</form>
+
+
+{% endblock %}
+
