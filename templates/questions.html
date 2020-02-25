@@ -3,7 +3,7 @@
 {% block form %}
 
 <p>{{question}}</p>
-<form action="/answer" method="post">
+<form action="/answer" method="POST">
     {% for choice in choices %}
     <input id="{{choice}}" type="radio" name="q"value="{{choice}}">
     <label for="{{choice}}">{{choice}}</label>
