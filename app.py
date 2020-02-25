@@ -28,6 +28,7 @@ def start_survey():
 
 @app.route("/set-session", methods=['POST'])
 def store_session():
+
     session["responses"] = []
     return redirect('/questions/0')
 
@@ -41,7 +42,7 @@ def questions(num):
         
     #send next question
     if num == question_number:
-        survey = surveys_dict[session['curr_id']]
+        survey = surveys_dict[session["curr_id"]]
         curr_question = survey.questions[num]
         
         return render_template('questions.html', question = curr_question)
@@ -52,11 +53,13 @@ def questions(num):
 @app.route('/answer', methods=["post"])
 def answer():
 
-    #save answer in session
+    #get answer and comment if any 
     curr_answer = request.form["q"]
+    curr_comment = request.form.get("comment", "")
 
+    #save answer and comment in session
     responses = session['responses']
-    responses.append(curr_answer) 
+    responses.append({"answer": curr_answer, "comment": curr_comment})
     session['responses'] = responses
 
     #send new question or send to thank you page
@@ -70,4 +73,6 @@ def answer():
 
 @app.route('/thank-you')
 def thank_you():
-    return "<h1> Thank you! </h1>"
+    survey = surveys_dict[session["curr_id"]]
+    responses = session['responses']
+    return render_template('thanks.html', response = response, survey = survey)

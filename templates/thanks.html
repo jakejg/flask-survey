@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block thanks %}
+<ul>
+    {% for question in survey.questions %}
+    <li>{{question}}</li>
+</ul>
+
+
+{% endblock %}
