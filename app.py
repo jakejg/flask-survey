@@ -19,11 +19,10 @@ def home():
 @app.route('/save-form')
 def satisfaction():
     selected_title = request.args.get("survey_title")
-
     for survey in surveys.surveys.values():
         if survey.title == selected_title:
             # fix
-            session['survey'] = 
+            #session['survey'] = 
             return render_template('start.html', survey = survey)
     return "nope"
 
