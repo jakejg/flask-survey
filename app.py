@@ -8,23 +8,21 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 
-
+surveys_dict = surveys.surveys
 question_number = 0
 
 @app.route('/')
-def home():
-    surveys_dict = surveys.surveys
+def choose_survey():
+    global question_number
+    question_number = 0
     return render_template('choose.html', surveys = surveys_dict)
 
-@app.route('/save-form')
-def satisfaction():
-    selected_title = request.args.get("survey_title")
-    for survey in surveys.surveys.values():
-        if survey.title == selected_title:
-            # fix
-            #session['survey'] = 
-            return render_template('start.html', survey = survey)
-    return "nope"
+@app.route('/', methods=["POST"])
+def start_survey():
+    selected_survey = request.form.get("survey_id")
+    session["curr_id"] = selected_survey
+
+    return render_template('start.html', survey = surveys_dict[selected_survey])
 
 @app.route("/set-session", methods=['POST'])
 def store_session():
@@ -34,13 +32,17 @@ def store_session():
 @app.route('/questions/<num>')
 def questions(num):
     num =int(num)
+
+    #send to thank you page
     if question_number == "done":
         return redirect ('/thank-you')
-    if num == question_number:
-        curr_question = surveys.satisfaction_survey.questions[num].question
-        choices = surveys.satisfaction_survey.questions[num].choices
         
-        return render_template('questions.html', choices = choices, question = curr_question)
+    #send next question
+    if num == question_number:
+        survey = surveys_dict[session['curr_id']]
+        curr_question = survey.questions[num]
+        
+        return render_template('questions.html', choices = curr_question.choices, question = curr_question.question)
     else:
         flash("You are trying to access an invalid question")
         return redirect(f'/questions/{question_number}')

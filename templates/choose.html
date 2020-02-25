@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block choose %}
-<form action="/save-form">
-    <select name="survey_title" id="">
-        {% for survey in surveys.values() %}
-        <option value="{{survey.title}}">
+<form method="POST">
+    <select name="survey_id" id="">
+        {% for id, survey in surveys.items() %}
+        <option value="{{id}}">
             {{survey.title}}
     {% endfor %}
     </select> 
