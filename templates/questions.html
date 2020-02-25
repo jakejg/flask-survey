@@ -1,17 +1,21 @@
 {% extends "base.html" %}
 
 {% block form %}
+<div>
+    <p>{{question.question}}</p>
 
-<p>{{question.question}}</p>
-<form action="/answer" method="POST">
-    {% for choice in question.choices %}
-    <input id="{{choice}}" type="radio" name="q"value="{{choice}}">
-    <label for="{{choice}}">{{choice}}</label>
-    {% endfor %}
-    {% if question.allow_text %}
-    <textarea name="comment"cols="30" rows="10">Add your comment...</textarea>
-    {% endif %}
-    <input type="submit">
-</form>
+    <form action="/answer" method="POST">
+        <div class="form-check"></div>
+            {% for choice in question.choices %}
+            <input id="{{choice}}" type="radio" name="q"value="{{choice}}">
+            <label for="{{choice}}">{{choice}}</label>
+            {% endfor %}
+            {% if question.allow_text %}
+            <textarea name="comment"cols="30" rows="10">Add your comment...</textarea>
+            {% endif %}
+            <button class="btn btn-primary">Continue</button>
+        </div>
+    </form>
+</div>
 
 {% endblock %}

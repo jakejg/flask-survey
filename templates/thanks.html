@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 
 {% block thanks %}
-<ul>
-    {% for question in survey.questions %}
-    <li>{{question}}</li>
-</ul>
+<div>
+    <h1>Thank you!</h1>
+    <ul>
+        {% for num in range(questions_list_length) %}
+        <li><b>{{survey.questions[num].question}}</b>{{responses[num]['answer']}}<br>
+        {% if responses[num]['comment'] %}
+        {{responses[num]['comment']}}
+        {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 
 
 {% endblock %}

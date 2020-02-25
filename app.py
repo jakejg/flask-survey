@@ -75,4 +75,5 @@ def answer():
 def thank_you():
     survey = surveys_dict[session["curr_id"]]
     responses = session['responses']
-    return render_template('thanks.html', response = response, survey = survey)
+    questions_list_length = len(survey.questions)
+    return render_template('thanks.html', responses = responses, survey = survey, questions_list_length = questions_list_length)
